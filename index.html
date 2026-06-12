@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng nhập & Đăng ký</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    display:flex;
+    justify-content:center;
+    margin-top:50px;
+}
+
+.container{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    width:300px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#4CAF50;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#45a049;
+}
+
+.link{
+    text-align:center;
+    color:blue;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.error{
+    color:red;
+    font-size:14px;
+    margin-bottom:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Đăng nhập -->
+    <div id="loginForm">
+        <h2>Đăng nhập</h2>
+
+        <input type="text" id="loginUser" placeholder="Tên tài khoản">
+        <input type="password" id="loginPass" placeholder="Mật khẩu">
+
+        <!-- Thông báo lỗi -->
+        <div id="loginError" class="error"></div>
+
+        <button onclick="login()">Đăng nhập</button>
+
+        <div class="link" onclick="showRegister()">
+            Chưa có tài khoản? Đăng ký
+        </div>
+    </div>
+
+    <!-- Đăng ký -->
+    <div id="registerForm" style="display:none;">
+        <h2>Đăng ký</h2>
+
+        <input type="text" id="registerUser" placeholder="Tên tài khoản">
+        <input type="password" id="registerPass" placeholder="Mật khẩu">
+
+        <input type="password" id="confirmPass" placeholder="Xác nhận mật khẩu">
+
+        <button onclick="register()">Đăng ký</button>
+
+        <div class="link" onclick="showLogin()">
+            Đã có tài khoản? Đăng nhập
+        </div>
+    </div>
+
+</div>
+
+<script>
+let users = {};
+
+function register() {
+    let username = document.getElementById("registerUser").value;
+    let password = document.getElementById("registerPass").value;
+    let confirm = document.getElementById("confirmPass").value;
+
+    if (!username || !password || !confirm) {
+        alert("Vui lòng nhập đầy đủ thông tin!");
+        return;
+    }
+
+    if (password !== confirm) {
+        alert("Mật khẩu xác nhận không khớp!");
+        return;
+    }
+
+    users[username] = password;
+
+    alert("Đăng ký thành công!");
+    showLogin();
+}
+
+function login() {
+    let username = document.getElementById("loginUser").value;
+    let password = document.getElementById("loginPass").value;
+    let error = document.getElementById("loginError");
+
+    if (users[username] === password) {
+        error.textContent = "";
+        alert("Đăng nhập thành công!");
+    } else {
+        error.textContent = "Sai tài khoản hoặc mật khẩu!";
+    }
+}
+
+function showRegister() {
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("registerForm").style.display = "block";
+
+    document.getElementById("loginError").textContent = "";
+}
+
+function showLogin() {
+    document.getElementById("registerForm").style.display = "none";
+    document.getElementById("loginForm").style.display = "block";
+}
+</script>
+
+</body>
+</html>
