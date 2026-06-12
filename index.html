@@ -97,7 +97,11 @@ button:hover{
 </div>
 
 <script>
-let users = {};
+let users = JSON.parse(localStorage.getItem("users")) || {};
+
+function saveUsers(){
+    localStorage.setItem("users", JSON.stringify(users));
+}
 
 function register() {
     let username = document.getElementById("registerUser").value;
@@ -114,7 +118,13 @@ function register() {
         return;
     }
 
+    if(users[username]){
+        alert("Tài khoản đã tồn tại!");
+        return;
+    }
+
     users[username] = password;
+    saveUsers();
 
     alert("Đăng ký thành công!");
     showLogin();
@@ -136,7 +146,6 @@ function login() {
 function showRegister() {
     document.getElementById("loginForm").style.display = "none";
     document.getElementById("registerForm").style.display = "block";
-
     document.getElementById("loginError").textContent = "";
 }
 
